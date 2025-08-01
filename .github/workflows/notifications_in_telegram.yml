@@ -1,0 +1,49 @@
+name: Discussions → Telegram
+
+on:
+  discussion:
+    types: [created]
+  discussion_comment:
+    types: [created]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notificar nueva discusión (texto plano)
+        if: github.event_name == 'discussion' && github.event.action == 'created'
+        uses: appleboy/telegram-action@v1.0.1
+        with:
+          token: ${{ secrets.BOT_TOKEN }}
+          to: ${{ secrets.CHAT_ID }}
+          message: |
+            🚀  Nueva Pregunta en el Foro 🚀
+
+            📁 Repositorio: ${{ github.repository }}
+
+            📝 Título: ${{ github.event.discussion.title }}
+
+            👤 Autor: ${{ github.event.discussion.user.login }}
+
+            📝 Contenido:
+            ${{ github.event.discussion.body }}
+
+            🔗 Enlace: ${{ github.event.discussion.html_url }}
+
+      - name: Notificar comentario en discusión
+        if: github.event_name == 'discussion_comment' && github.event.action == 'created'
+        uses: appleboy/telegram-action@v1.0.1
+        with:
+          token: ${{ secrets.BOT_TOKEN }}
+          to: ${{ secrets.CHAT_ID }}
+          message: |
+            💬 Nuevo Comentario en el Foro 💬
+
+            📝 Discusión: ${{ github.event.discussion.title }}
+
+            👤 Comentado por: ${{ github.event.comment.user.login }}
+
+            🗒️ Comentario:
+            ${{ github.event.comment.body }}
+
+            🔗 Enlace: ${{ github.event.comment.html_url }}
