@@ -35,22 +35,6 @@
 11. **Fines de semana de descanso** 🌟  
     Desde los sábados a las 12 PM hasta los lunes a las 8 AM, tomamos un descanso. Durante este tiempo, no responderemos dudas para que todos, ayudantes y alumnos, puedan relajarse. Lo mismo para los feriados. Las discussions creadas durante este período recibirán respuesta después del descanso.
 
-Por último, te dejamos un template que tienes que usar en la discussion. En caso de no usarlo, no será respondida la duda. 
-## Template
-
-### Prerrequisitos
-
-(Marcar colocando una X entre los corchetes los ítems que ya hiciste, así: "[X]")
-
-- [ ] Leí las reglas del foro.
-- [ ] Busqué en las issues si ya preguntaron mi duda y no encontré nada parecido.
-- [ ] Mi duda no se trata de un tema administrativo o personal. En caso de ser así, me debo contactar a mi profe, a Bienestar o al correo del curso con el asunto [IIC2333-SX-Bienestar]. En donde, X es el número de la sección es importante que al contactar entregues toda la información relevante. 
-- [ ] Voy a utilizar un título descriptivo y completaré correctamente esta plantilla.
-
-### Duda
-
-[Detalla tu duda de manera descriptiva. Puedes especificar partes del enunciado.]
-
 ---
 
 ¡Gracias por seguir estas reglas y hacer de este foro un lugar útil para todas/os!🚀
