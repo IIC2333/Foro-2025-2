@@ -1,4 +1,4 @@
-name: Discussions → Telegram
+name: Discussions → Telegram topic decorated
 
 on:
   discussion:
@@ -10,40 +10,33 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - name: Notificar nueva discusión (texto plano)
+      - name: Notificar nueva discusión
         if: github.event_name == 'discussion' && github.event.action == 'created'
-        uses: appleboy/telegram-action@v1.0.1
-        with:
-          token: ${{ secrets.BOT_TOKEN }}
-          to: ${{ secrets.CHAT_ID }}
-          message: |
-            🚀  Nueva Pregunta en el Foro 🚀
+        run: |
+          MESSAGE=$(printf "🚨 Nueva Pregunta Abierta 🚨\n\n📁 Repositorio: %s\n\n📝 Título: %s\n\n👤 Autor: %s\n\n🗒️ Descripción:\n%s\n\nEnlace: %s" \
+            "${{ github.repository }}" \
+            "${{ github.event.discussion.title }}" \
+            "${{ github.event.discussion.user.login }}" \
+            "${{ github.event.discussion.body }}" \
+            "${{ github.event.discussion.html_url }}")
 
-            📁 Repositorio: ${{ github.repository }}
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.BOT_TOKEN }}/sendMessage" \
+            -d chat_id=${{ secrets.CHAT_ID }} \
+            -d message_thread_id=9 \
+            --data-urlencode text="$MESSAGE"
 
-            📝 Título: ${{ github.event.discussion.title }}
-
-            👤 Autor: ${{ github.event.discussion.user.login }}
-
-            📝 Contenido:
-            ${{ github.event.discussion.body }}
-
-            🔗 Enlace: ${{ github.event.discussion.html_url }}
-
-      - name: Notificar comentario en discusión
+      - name: Notify new issue comment
         if: github.event_name == 'discussion_comment' && github.event.action == 'created'
-        uses: appleboy/telegram-action@v1.0.1
-        with:
-          token: ${{ secrets.BOT_TOKEN }}
-          to: ${{ secrets.CHAT_ID }}
-          message: |
-            💬 Nuevo Comentario en el Foro 💬
+        run: |
+          MESSAGE=$(printf "🚨 Nuevo comentario en Discussion 🚨\n\n📝 Discussion: %s\n\n👤 Comentado por: %s\n\n✏️ Comentario:\n%s\n\n🔗 Enlace: %s" \
+            "${{ github.event.discussion.title }}" \
+            "${{ github.event.comment.user.login }}" \
+            "${{ github.event.comment.body }}" \
+            "${{ github.event.comment.html_url }}")
 
-            📝 Discusión: ${{ github.event.discussion.title }}
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.BOT_TOKEN }}/sendMessage" \
+            -d chat_id=${{ secrets.CHAT_ID }} \
+            -d message_thread_id=9 \
+            --data-urlencode text="$MESSAGE"
 
-            👤 Comentado por: ${{ github.event.comment.user.login }}
 
-            🗒️ Comentario:
-            ${{ github.event.comment.body }}
-
-            🔗 Enlace: ${{ github.event.comment.html_url }}
